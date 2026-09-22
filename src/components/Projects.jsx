@@ -3,7 +3,7 @@ import {
   FiGithub,
   FiExternalLink,
   FiX,
-  FiCrown,
+  FiStar,
   FiCheck,
   FiSend,
   FiUser,
@@ -18,7 +18,6 @@ const projects = [
     tags: ['React', 'Tailwind', 'Responsive'],
     image: '/projects/car-rental.jpg',
     live: 'https://car-rental-finalll.vercel.app',
-    code: '#',
     featured: true,
   },
   {
@@ -27,7 +26,6 @@ const projects = [
     tags: ['React', 'CSS3', 'JavaScript'],
     image: '/projects/image-gallery.jpg',
     live: 'https://chic-chebakia-46f332.netlify.app',
-    code: '#',
     featured: true,
   },
   {
@@ -36,7 +34,6 @@ const projects = [
     tags: ['React', 'API', 'Tailwind'],
     image: '/projects/weather-app.jpg',
     live: 'https://stunning-hamster-52236f.netlify.app',
-    code: '#',
     featured: true,
   },
   {
@@ -45,7 +42,6 @@ const projects = [
     tags: ['HTML5', 'CSS3', 'JavaScript'],
     image: '/projects/eid-card.jpg',
     live: 'https://melodious-baklava-cb70e8.netlify.app',
-    code: '#',
   },
   {
     title: 'Post Card',
@@ -53,7 +49,6 @@ const projects = [
     tags: ['React', 'Tailwind', 'UI'],
     image: '/projects/post-card.jpg',
     live: 'https://euphonious-gaufre-1daa83.netlify.app',
-    code: '#',
   },
   {
     title: 'Blogging App',
@@ -61,7 +56,6 @@ const projects = [
     tags: ['React', 'REST API', 'Responsive'],
     image: '/projects/blogging-app.jpg',
     live: 'https://incandescent-kringle-d63ddd.netlify.app',
-    code: '#',
   },
 ];
 
@@ -104,6 +98,12 @@ export default function Projects() {
         setPremiumForm({ name: '', email: '', plan: 'Pro', card: '' });
       }, 2200);
     }, 1500);
+  };
+
+  // Jab "Code" button click ho → premium form khole
+  const handleCodeClick = (e) => {
+    e.stopPropagation();
+    setPremiumOpen(true);
   };
 
   return (
@@ -158,7 +158,6 @@ export default function Projects() {
                     e.currentTarget.nextElementSibling.style.display = 'flex';
                   }}
                 />
-                {/* Fallback if image missing */}
                 <div
                   className="absolute inset-0 hidden items-center justify-center text-5xl font-bold"
                   style={{ background: 'var(--bg-alt)', color: 'var(--accent)' }}
@@ -166,7 +165,6 @@ export default function Projects() {
                   {p.title.charAt(0)}
                 </div>
 
-                {/* Gradient overlay on hover */}
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
@@ -219,14 +217,14 @@ export default function Projects() {
                   >
                     <FiExternalLink /> Live
                   </a>
-                  <a
-                    href={p.code}
-                    onClick={(e) => e.stopPropagation()}
+                  {/* "Code" button ab premium form kholta hai */}
+                  <button
+                    onClick={handleCodeClick}
                     className="flex items-center gap-1.5 font-medium transition-colors"
                     style={{ color: 'var(--text-soft)' }}
                   >
                     <FiGithub /> Code
-                  </a>
+                  </button>
                 </div>
               </div>
             </article>
@@ -298,7 +296,7 @@ export default function Projects() {
                 ))}
               </div>
 
-              {/* Buttons: Live + Code + Get Premium */}
+              {/* Sirf 2 buttons: View Live + Code (jo premium form kholta hai) */}
               <div className="flex flex-wrap gap-3 justify-center">
                 <a
                   href={selected.live}
@@ -308,21 +306,11 @@ export default function Projects() {
                 >
                   <FiExternalLink /> View Live
                 </a>
-                <a
-                  href={selected.code}
+                <button
+                  onClick={() => setPremiumOpen(true)}
                   className="btn-ghost px-6 py-2.5 rounded-full text-sm font-semibold inline-flex items-center gap-2"
                 >
                   <FiGithub /> Code
-                </a>
-                <button
-                  onClick={() => setPremiumOpen(true)}
-                  className="px-6 py-2.5 rounded-full text-sm font-semibold inline-flex items-center gap-2 text-white transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
-                    boxShadow: '0 8px 25px rgba(245, 158, 11, 0.4)',
-                  }}
-                >
-                  <FiCrown /> Get Premium
                 </button>
               </div>
             </div>
@@ -346,7 +334,6 @@ export default function Projects() {
               boxShadow: '0 30px 80px rgba(0,0,0,0.6), 0 0 60px var(--glow)',
             }}
           >
-            {/* Decorative gradient header */}
             <div
               className="h-2 w-full"
               style={{ background: 'linear-gradient(135deg, #f59e0b, #ef4444, #8b5cf6)' }}
@@ -361,7 +348,6 @@ export default function Projects() {
             </button>
 
             <div className="p-8">
-              {/* Crown icon */}
               <div className="flex justify-center mb-5">
                 <div
                   className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl text-white animate-float"
@@ -370,7 +356,7 @@ export default function Projects() {
                     boxShadow: '0 12px 35px rgba(245, 158, 11, 0.5)',
                   }}
                 >
-                  <FiCrown />
+                  <FiStar />
                 </div>
               </div>
 
@@ -381,7 +367,6 @@ export default function Projects() {
                 Unlock exclusive access to source code, priority support, and lifetime updates.
               </p>
 
-              {/* Benefits */}
               <div className="space-y-2.5 mb-7">
                 {[
                   'Full source code access',
@@ -401,7 +386,6 @@ export default function Projects() {
                 ))}
               </div>
 
-              {/* Success state */}
               {premiumStatus === 'success' ? (
                 <div className="text-center py-6">
                   <div
@@ -417,7 +401,6 @@ export default function Projects() {
                 </div>
               ) : (
                 <form onSubmit={handlePremiumSubmit} className="space-y-4">
-                  {/* Name */}
                   <div className="relative">
                     <FiUser
                       className="absolute left-4 top-1/2 -translate-y-1/2 text-sm"
@@ -438,7 +421,6 @@ export default function Projects() {
                     />
                   </div>
 
-                  {/* Email */}
                   <div className="relative">
                     <FiMail
                       className="absolute left-4 top-1/2 -translate-y-1/2 text-sm"
@@ -459,7 +441,6 @@ export default function Projects() {
                     />
                   </div>
 
-                  {/* Plan Selector */}
                   <div>
                     <label className="text-xs font-medium mb-2 block" style={{ color: 'var(--text-soft)' }}>
                       Choose your plan
@@ -488,7 +469,6 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  {/* Card number */}
                   <div className="relative">
                     <FiCreditCard
                       className="absolute left-4 top-1/2 -translate-y-1/2 text-sm"
@@ -515,7 +495,6 @@ export default function Projects() {
                     />
                   </div>
 
-                  {/* Submit */}
                   <button
                     type="submit"
                     disabled={premiumStatus === 'submitting'}
