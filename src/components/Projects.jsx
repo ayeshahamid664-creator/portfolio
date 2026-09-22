@@ -15,7 +15,7 @@ const projects = [
   {
     title: 'Car Rental Website',
     desc: 'A fully responsive car rental platform with vehicle listings, booking flow, and modern UI built with React and Tailwind CSS.',
-    tags: ['React', 'Tailwind', 'Responsive'],
+    tags: ['React', 'Tailwind', 'Responsive', 'UI', 'REST API'],
     image: '/projects/car-rental.jpg',
     live: 'https://car-rental-finalll.vercel.app',
     featured: true,
@@ -23,7 +23,7 @@ const projects = [
   {
     title: 'Image Gallery',
     desc: 'A beautiful and interactive image gallery with filtering, lightbox view, and smooth animations for browsing photos.',
-    tags: ['React', 'CSS3', 'JavaScript'],
+    tags: ['Tailwind', 'Responsive', 'JavaScript', 'HTML', 'UI'],
     image: '/projects/image-gallery.jpg',
     live: 'https://chic-chebakia-46f332.netlify.app',
     featured: true,
@@ -31,7 +31,7 @@ const projects = [
   {
     title: 'Weather App',
     desc: 'Real-time weather application fetching live data with search functionality, forecast display, and clean UI.',
-    tags: ['React', 'API', 'Tailwind'],
+    tags: ['Tailwind', 'Responsive', 'JavaScript', 'HTML', 'UI', 'API', 'REST API'],
     image: '/projects/weather-app.jpg',
     live: 'https://stunning-hamster-52236f.netlify.app',
     featured: true,
@@ -39,21 +39,21 @@ const projects = [
   {
     title: 'Eid Card',
     desc: 'A festive and animated Eid greeting card web app with beautiful visuals and interactive elements.',
-    tags: ['HTML5', 'CSS3', 'JavaScript'],
+    tags: ['Tailwind', 'Responsive', 'JavaScript', 'HTML', 'UI', 'CSS3'],
     image: '/projects/eid-card.jpg',
     live: 'https://melodious-baklava-cb70e8.netlify.app',
   },
   {
     title: 'Post Card',
     desc: 'A creative post card generator with customizable text, colors, and download functionality.',
-    tags: ['React', 'Tailwind', 'UI'],
+    tags: ['Tailwind', 'Responsive', 'JavaScript', 'HTML', 'UI'],
     image: '/projects/post-card.jpg',
     live: 'https://euphonious-gaufre-1daa83.netlify.app',
   },
   {
     title: 'Blogging App',
     desc: 'A full-featured blogging platform with post creation, editing, and responsive design for seamless reading.',
-    tags: ['React', 'REST API', 'Responsive'],
+    tags: ['Tailwind', 'Responsive', 'JavaScript', 'HTML', 'UI', 'API', 'REST API'],
     image: '/projects/blogging-app.jpg',
     live: 'https://incandescent-kringle-d63ddd.netlify.app',
   },
@@ -67,12 +67,14 @@ export default function Projects() {
   const [premiumForm, setPremiumForm] = useState({ name: '', email: '', plan: 'Pro', card: '' });
   const [premiumStatus, setPremiumStatus] = useState('idle'); // idle | submitting | success
 
+  // ✅ Sirf static elements (headings, filter buttons) ke liye reveal
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
       { threshold: 0.15 }
     );
-    ref.current.querySelectorAll('.reveal').forEach((el) => obs.observe(el));
+    const nodes = ref.current?.querySelectorAll('.reveal-static') || [];
+    nodes.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
 
@@ -109,15 +111,15 @@ export default function Projects() {
   return (
     <section id="projects" ref={ref} className="py-24 md:py-32 px-6 md:px-10">
       <div className="max-w-6xl mx-auto">
-        <h2 className="reveal text-center text-4xl md:text-5xl font-extrabold mb-3">
+        <h2 className="reveal-static text-center text-4xl md:text-5xl font-extrabold mb-3">
           My <span className="gradient-text">Projects</span>
         </h2>
-        <p className="reveal text-center mb-10" style={{ color: 'var(--text-soft)' }}>
+        <p className="reveal-static text-center mb-10" style={{ color: 'var(--text-soft)' }}>
           A selection of things I've built
         </p>
 
         {/* FILTERS */}
-        <div className="reveal flex flex-wrap justify-center gap-3 mb-12">
+        <div className="reveal-static flex flex-wrap justify-center gap-3 mb-12">
           {allTags.map((t) => (
             <button
               key={t}
@@ -135,13 +137,18 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* GRID */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* GRID — key={filter} taake har filter change pe fresh animation chale */}
+        <div key={filter} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((p, i) => (
             <article
               key={p.title}
-              className="reveal card rounded-2xl overflow-hidden group cursor-pointer flex flex-col"
-              style={{ transitionDelay: `${i * 70}ms` }}
+              className="card rounded-2xl overflow-hidden group cursor-pointer flex flex-col animate-fade-up"
+              style={{
+                animationDelay: `${i * 70}ms`,
+                animationFillMode: 'both',
+                opacity: 1,
+                transform: 'none',
+              }}
               onClick={() => setSelected(p)}
             >
               {/* COVER IMAGE */}
@@ -208,7 +215,7 @@ export default function Projects() {
 
                 <div className="flex gap-3 text-sm">
                   <a
-                    href={p.live}
+                    href={p.live || '#'}
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
@@ -296,10 +303,9 @@ export default function Projects() {
                 ))}
               </div>
 
-              {/* Sirf 2 buttons: View Live + Code (jo premium form kholta hai) */}
               <div className="flex flex-wrap gap-3 justify-center">
                 <a
-                  href={selected.live}
+                  href={selected.live || '#'}
                   target="_blank"
                   rel="noreferrer"
                   className="btn-primary px-6 py-2.5 rounded-full text-sm font-semibold inline-flex items-center gap-2"

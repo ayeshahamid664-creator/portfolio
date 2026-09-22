@@ -14,8 +14,13 @@ export default {
         'fade-up': 'fadeUp 0.9s ease forwards',
         blob: 'blob 12s ease-in-out infinite',
         gradient: 'gradientShift 6s ease infinite',
+        'fade-up': 'fadeUp 0.9s ease forwards',
       },
       keyframes: {
+         fadeUp: {
+    '0%': { opacity: 0, transform: 'translateY(30px)' },
+    '100%': { opacity: 1, transform: 'translateY(0)' },
+  },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-18px)' },
